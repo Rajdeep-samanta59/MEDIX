@@ -5,11 +5,12 @@ const Medix=require("./medicine.js");
 const CartSchema=new mongoose.Schema({
     email:{
         type:String,
-        require:true,
+        required:true,
     },
     product:[{
         prod:{
             type: mongoose.Schema.Types.ObjectId, ref: 'Medix' ,
+            
         },
        qty:{type:Number,required:true}
 
