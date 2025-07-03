@@ -1,26 +1,27 @@
 import React, { useState } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 // import './Header.css'
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-
+// useNavigate is used to programmatically redirect users after login.
     let nav= useNavigate()
     const [formData, setFormData] = useState({
         username: '',
         password: ''
     });
-
+// Called whenever the user types into the form.// Dynamically updates the formData state for both fields
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
+        const { name, value } = e.target;//e.target refers to the input element that triggered the change.
+        // name is the name attribute of that input (e.g., "username" or "password").}}{{value is what the user typed.
+        setFormData(prevState => ({ 
             ...prevState,
             [name]: value
         }));
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Prevents the default form submission behavior (ie preventing page reload)
         console.log(formData);
         try {
             const response = await axios.post('http://localhost:8080/login',{formData});
@@ -28,6 +29,7 @@ export default function Login() {
             console.log(response.data.data);
 
             if (response.data.data) {
+
                 const token= response.data.data;
                 localStorage.setItem('token', token);
                 nav('/');
